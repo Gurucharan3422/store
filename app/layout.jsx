@@ -1,18 +1,19 @@
-import "./globals.css";
-import Navbar from "./components/Navbar";
+import './globals.css';
+import { UserProvider } from '../context/UserContext';
 
 export const metadata = {
-  title: "PLP Task",
+  title: 'PLP Task',
+  description: 'Your project',
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        {children}
+        <UserProvider>
+          {children}
+        </UserProvider>
       </body>
     </html>
   );
 }
-

@@ -1,14 +1,18 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Navbar from './components/Navbar';
 
 export default function HomePage() {
   const router = useRouter();
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const user = localStorage.getItem('loggedInUser');
-    if (!user) {
+    const storedUser = localStorage.getItem('loggedInUser');
+    if (!storedUser) {
       router.push('/auth/login');
+    } else {
+      setUser(JSON.parse(storedUser));
     }
   }, []);
 
@@ -31,8 +35,12 @@ export default function HomePage() {
     },
   ];
 
+  if (!user) return null; // Don't render content until user is verified
+
   return (
     <div className="bg-white min-h-screen">
+      <Navbar />
+
       {/* Hero Section */}
       <section className="flex flex-col md:flex-row items-center justify-between px-10 md:px-20 py-16 bg-gray-100">
         <div className="max-w-xl">
